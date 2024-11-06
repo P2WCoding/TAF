@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCHD Travel Authorization Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bordered { border: 1px solid black; }
+        .relative { position: relative; } /* Make parent relative */
+        .absolute-top-right { position: absolute; top: 1rem; right: 1rem; } /* Position button */
+    </style>
+</head>
+<body class="p-8" style="background-color: #009b22;">
+
+    <div class="bordered p-8 bg-white rounded-lg shadow-lg relative">
+        <!-- Instructions Button -->
+        <a href="instructions.html" target="_blank" class="bg-blue-500 text-white py-2 px-4 rounded absolute-top-right">
+            Instructions
+        </a>
+
+        <h1 class="text-center font-bold text-xl mb-4">Travel Authorization Form</h1>
+	
+        <!-- SECTION 1: REQUESTED TRAVEL DETAILS -->
+        <h2 class="font-bold mt-4 text-lg">REQUESTED TRAVEL DETAILS</h2>
+        <div class="bordered p-4 bg-gray-50 rounded-md">
+            <div class="grid grid-cols-3 gap-4">
+                <div><label>Name:</label> <input type="text" class="border p-2 w-full"></div>
+                <div><label>Title:</label> <input type="text" class="border p-2 w-full"></div>
+                <div><label>Program:</label> <input type="text" class="border p-2 w-full"></div>
+            </div>
+            <div class="mt-4"><label>Destination (City & State):</label> <input type="text" class="border p-2 w-full"></div>
+            <div class="mt-4"><label>Reason For Travel:</label> <input type="text" class="border p-2 w-full"></div>
+			<div class="mt-4 grid grid-cols-2 gap-4">
+                <div>
+                    <label>Date Departing:</label> 
+                    <input type="date" id="dateDeparting" class="border p-2 w-full" onchange="calculateAllMeals()">
+                    <label class="mt-2">Time Departing:</label> 
+                    <input type="time" class="border p-2 w-full">
+                </div>
+                <div>
+                    <label>Date Returning:</label> 
+                    <input type="date" id="dateReturning" class="border p-2 w-full" onchange="calculateAllMeals()">
+                    <label class="mt-2">Time Returning:</label> 
+                    <input type="time" class="border p-2 w-full">
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: TRAVEL EXPENSES -->
+        <h2 class="font-bold mt-4 text-lg">TRAVEL EXPENSES</h2>
+        <div class="flex mt-4">
+            <div class="w-1/2 p-4 bordered bg-green-50">
+                <h3 class="font-bold">Mileage Calculation</h3>
+                <p>Miles to be Traveled: <input type="number" id="miles" class="border w-full p-1" value="0" oninput="calculateMileage()"></p>
+                <p>Mileage Rate: <input type="number" id="mileageRate" class="border w-full p-1" value="0.67" oninput="calculateMileage()"></p>
+                <p>Total Mileage: <span id="personalMileage">0</span></p>
+            </div>
+            <div class="w-1/2 p-4 bordered bg-blue-50">
+                <h3 class="font-bold">Lodging Calculation</h3>
+                <p>Number of Nights: <input type="number" id="nights" class="border w-full p-1" value="0" oninput="calculateLodging()"></p>
+                <p>Daily Rate: <input type="number" id="dailyRate" class="border w-full p-1" value="0" oninput="calculateLodging()"></p>
+                <p>Total Lodging: <span id="totalLodging">0</span></p>
+            </div>
+        </div>
+
+        <!-- MEAL PER DIEM CALCULATION -->
+        <div class="mt-4 bordered bg-yellow-50 p-4">
+            <h3 class="font-bold">Meal Per Diem Calculation</h3>
+            <button onclick="addDay()" class="mt-2 bg-blue-500 text-white p-2 rounded">Add Day</button>
+            <table class="w-full mt-4" id="mealTable">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="bordered p-2">Dates of Travel</th>
+                        <th class="bordered p-2">Breakfast</th>
+                        <th class="bordered p-2">Lunch</th>
+                        <th class="bordered p-2">Dinner</th>
+                        <th class="bordered p-2">Incidentals</th>
+                        <th class="bordered p-2">Total Per Day</th>
+                    </tr>
+                </thead>
+                <tbody id="mealTableBody">
+                    <tr class="bordered">
+                        <td class="bordered p-2"><input type="date" class="border p-2 w-full" onchange="calculateAllMeals()"></td>
+                        <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+                        <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+                        <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+                        <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+                        <td class="bordered p-2"><span class="totalPerDay">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="mt-2 font-bold">Total Meal Per Diem: <span id="totalMealPerDiem">0</span></p>
+        </div>
+
+        <!-- SECTION 3: TRAVEL SUMMARY -->
+        <h2 class="font-bold mt-4 text-lg">TRAVEL EXPENSE SUMMARY</h2>
+        <table class="w-full mt-2 bordered">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="bordered p-2">Type</th>
+                    <th class="bordered p-2">Expense</th>
+                    <th class="bordered p-2">Cash Advance Requested</th>
+                    <th class="bordered p-2">Business Office Check</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="bordered p-2">Personal Vehicle/Mileage*</td><td class="bordered p-2"><span id="expenseMileage">0</span></td><td class="bordered p-2"><span id="cashAdvanceMileage">0</span></td><td class="bordered p-2"><input type="checkbox"></td></tr>
+                <tr><td class="bordered p-2">Lodging</td><td class="bordered p-2"><span id="expenseLodging">0</span></td><td class="bordered p-2">$0.00</td><td class="bordered p-2"><input type="checkbox"></td></tr>
+                <tr><td class="bordered p-2">Meals</td><td class="bordered p-2"><span id="expenseMealPerDiem">0</span></td><td class="bordered p-2">$0.00</td><td class="bordered p-2"><input type="checkbox"></td></tr>
+                <tr><td class="bordered p-2">Total</td><td class="bordered p-2"><span id="totalExpense">0</span></td><td class="bordered p-2"><span id="totalCashAdvance">0</span></td><td class="bordered p-2"></td></tr>
+            </tbody>
+        </table>
+
+        <!-- Print and Save as PDF Buttons -->
+        <div class="mt-8 flex justify-end space-x-4">
+            <button onclick="window.print()" class="text-white p-2 rounded" style="background-color: #009b22;">Print</button>
+        </div>
+    </div>
+
+    <script>
+        function addDay() {
+            const tableBody = document.getElementById('mealTableBody');
+            const newRow = document.createElement('tr');
+            newRow.classList.add('bordered');
+            newRow.innerHTML = `
+                <td class="bordered p-2"><input type="date" class="border p-2 w-full" onchange="calculateAllMeals()"></td>
+                <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+                <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+                <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+                <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+                <td class="bordered p-2"><span class="totalPerDay">0</span></td>
+            `;
+            tableBody.appendChild(newRow);
+        }
+
+        function calculateMealPerDiem(inputElement) {
+            const row = inputElement.closest('tr');
+            const rowDate = new Date(row.cells[0].querySelector('input').value);
+            const departDate = new Date(document.getElementById('dateDeparting').value);
+            const returnDate = new Date(document.getElementById('dateReturning').value);
+
+            const isFirstOrLastDay = (rowDate.getTime() === departDate.getTime()) || (rowDate.getTime() === returnDate.getTime());
+
+            const breakfast = parseFloat(row.cells[1].querySelector('input').value) || 0;
+            const lunch = parseFloat(row.cells[2].querySelector('input').value) || 0;
+            const dinner = parseFloat(row.cells[3].querySelector('input').value) || 0;
+            const incidentals = parseFloat(row.cells[4].querySelector('input').value) || 0;
+
+            // Apply 75% rate if it's the first or last day
+            const dailyTotal = isFirstOrLastDay 
+                ? (breakfast * 0.75) + (lunch * 0.75) + (dinner * 0.75) + (incidentals * 0.75)
+                : breakfast + lunch + dinner + incidentals;
+
+            row.querySelector('.totalPerDay').innerText = dailyTotal.toFixed(2);
+
+            calculateTotalMealPerDiem();
+        }
+
+        function calculateTotalMealPerDiem() {
+            let totalMealPerDiem = 0;
+            document.querySelectorAll('.totalPerDay').forEach(cell => {
+                totalMealPerDiem += parseFloat(cell.innerText) || 0;
+            });
+            document.getElementById('totalMealPerDiem').innerText = totalMealPerDiem.toFixed(2);
+            document.getElementById('expenseMealPerDiem').innerText = totalMealPerDiem.toFixed(2);
+            calculateTotalExpense();
+        }
+
+        function calculateMileage() {
+            const miles = parseFloat(document.getElementById('miles').value) || 0;
+            const mileageRate = parseFloat(document.getElementById('mileageRate').value) || 0;
+            const personalMileage = miles * mileageRate;
+            document.getElementById('personalMileage').innerText = personalMileage.toFixed(2);
+            document.getElementById('expenseMileage').innerText = personalMileage.toFixed(2);
+            document.getElementById('cashAdvanceMileage').innerText = personalMileage.toFixed(2);
+            calculateTotalExpense();
+        }
+
+        function calculateLodging() {
+            const nights = parseFloat(document.getElementById('nights').value) || 0;
+            const dailyRate = parseFloat(document.getElementById('dailyRate').value) || 0;
+            const totalLodging = nights * dailyRate;
+            document.getElementById('totalLodging').innerText = totalLodging.toFixed(2);
+            document.getElementById('expenseLodging').innerText = totalLodging.toFixed(2);
+            calculateTotalExpense();
+        }
+
+        function calculateTotalExpense() {
+            const mileage = parseFloat(document.getElementById('expenseMileage').innerText) || 0;
+            const lodging = parseFloat(document.getElementById('expenseLodging').innerText) || 0;
+            const meals = parseFloat(document.getElementById('expenseMealPerDiem').innerText) || 0;
+            const totalExpense = mileage + lodging + meals;
+            document.getElementById('totalExpense').innerText = totalExpense.toFixed(2);
+            document.getElementById('totalCashAdvance').innerText = totalExpense.toFixed(2);
+        }
+
+        function calculateAllMeals() {
+            document.querySelectorAll('#mealTableBody tr').forEach(row => calculateMealPerDiem(row.querySelector('input')));
+        }
+    </script>
+</body>
+</html>
