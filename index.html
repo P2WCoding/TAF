@@ -93,8 +93,8 @@
             <p class="mt-2 font-bold">Total Meal Per Diem: <span id="totalMealPerDiem">0</span></p>
         </div>
 
-        <!-- SECTION 3: TRAVEL SUMMARY -->
-        <h2 class="font-bold mt-4 text-lg">TRAVEL EXPENSE SUMMARY</h2>
+        <!-- TRAVEL EXPENSE SUMMARY -->
+<h2 class="font-bold mt-4 text-lg">TRAVEL EXPENSE SUMMARY</h2>
 <table class="w-full mt-2 bordered">
     <thead>
         <tr class="bg-gray-100">
@@ -105,10 +105,35 @@
         </tr>
     </thead>
     <tbody>
+        <!-- Editable fields -->
         <tr>
-            <td class="bordered p-2">Mileage</td>
-            <td class="bordered p-2"><span id="expenseMileage">0</span></td>
-            <td class="bordered p-2"><span id="cashAdvanceMileage">0</span></td>
+            <td class="bordered p-2">Personal Vehicle/Mileage*</td>
+            <td class="bordered p-2"><input type="number" id="personalMileage" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceMileage" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td class="bordered p-2">Rental Vehicle</td>
+            <td class="bordered p-2"><input type="number" id="rentalVehicle" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceRental" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td class="bordered p-2">Commercial Airfare/Flight</td>
+            <td class="bordered p-2"><input type="number" id="airfare" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceAirfare" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td class="bordered p-2">Registration Fees</td>
+            <td class="bordered p-2"><input type="number" id="registrationFee" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceRegistration" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td class="bordered p-2">Meal Per Diem**</td>
+            <td class="bordered p-2"><span id="expenseMealPerDiem">0</span></td>
+            <td class="bordered p-2">$0.00</td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
@@ -118,27 +143,33 @@
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
-            <td class="bordered p-2">Meals</td>
-            <td class="bordered p-2"><span id="expenseMealPerDiem">0</span></td>
-            <td class="bordered p-2">$0.00</td>
+            <td class="bordered p-2">Parking</td>
+            <td class="bordered p-2"><input type="number" id="parking" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceParking" class="border p-2 w-full" value="0"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
-        <!-- Registration Fee Row -->
         <tr>
-            <td class="bordered p-2">Registration Fee</td>
-            <td class="bordered p-2"><input type="number" id="registrationFee" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
-            <td class="bordered p-2">$0.00</td>
+            <td class="bordered p-2">Other Transportation (i.e. taxi, subway)</td>
+            <td class="bordered p-2"><input type="number" id="otherTransportation" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceOtherTransportation" class="border p-2 w-full" value="0"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
-        <!-- Total Row -->
         <tr>
-            <td class="bordered p-2">Total</td>
-            <td class="bordered p-2"><span id="totalExpense">0</span></td>
-            <td class="bordered p-2"><span id="totalCashAdvance">0</span></td>
+            <td class="bordered p-2">Other Expenses</td>
+            <td class="bordered p-2"><input type="number" id="otherExpenses" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceOtherExpenses" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="checkbox"></td>
+        </tr>
+        <!-- Total Row (Read-Only) -->
+        <tr>
+            <td class="bordered p-2 font-bold">TOTAL</td>
+            <td class="bordered p-2 font-bold"><span id="totalExpense">0</span></td>
+            <td class="bordered p-2 font-bold"><span id="totalCashAdvance">0</span></td>
             <td class="bordered p-2"></td>
         </tr>
     </tbody>
 </table>
+
 
         <!-- Print and Save as PDF Buttons -->
         <div class="mt-8 flex justify-end space-x-4">
@@ -215,14 +246,32 @@
         }
 
         function calculateTotalExpense() {
-			const mileage = parseFloat(document.getElementById('expenseMileage').innerText) || 0;
-			const lodging = parseFloat(document.getElementById('expenseLodging').innerText) || 0;
-			const meals = parseFloat(document.getElementById('expenseMealPerDiem').innerText) || 0;
+			const mileage = parseFloat(document.getElementById('personalMileage').value) || 0;
+			const rentalVehicle = parseFloat(document.getElementById('rentalVehicle').value) || 0;
+			const airfare = parseFloat(document.getElementById('airfare').value) || 0;
 			const registrationFee = parseFloat(document.getElementById('registrationFee').value) || 0;
-			const totalExpense = mileage + lodging + meals + registrationFee;
+			const mealPerDiem = parseFloat(document.getElementById('expenseMealPerDiem').innerText) || 0;
+			const lodging = parseFloat(document.getElementById('expenseLodging').innerText) || 0;
+			const parking = parseFloat(document.getElementById('parking').value) || 0;
+			const otherTransportation = parseFloat(document.getElementById('otherTransportation').value) || 0;
+			const otherExpenses = parseFloat(document.getElementById('otherExpenses').value) || 0;
+
+			const totalExpense = mileage + rentalVehicle + airfare + registrationFee + mealPerDiem + lodging + parking + otherTransportation + otherExpenses;
 			document.getElementById('totalExpense').innerText = totalExpense.toFixed(2);
-			document.getElementById('totalCashAdvance').innerText = totalExpense.toFixed(2);
+
+			// Sum up all cash advance fields
+			const cashAdvanceMileage = parseFloat(document.getElementById('cashAdvanceMileage').value) || 0;
+			const cashAdvanceRental = parseFloat(document.getElementById('cashAdvanceRental').value) || 0;
+			const cashAdvanceAirfare = parseFloat(document.getElementById('cashAdvanceAirfare').value) || 0;
+			const cashAdvanceRegistration = parseFloat(document.getElementById('cashAdvanceRegistration').value) || 0;
+			const cashAdvanceParking = parseFloat(document.getElementById('cashAdvanceParking').value) || 0;
+			const cashAdvanceOtherTransportation = parseFloat(document.getElementById('cashAdvanceOtherTransportation').value) || 0;
+			const cashAdvanceOtherExpenses = parseFloat(document.getElementById('cashAdvanceOtherExpenses').value) || 0;
+
+			const totalCashAdvance = cashAdvanceMileage + cashAdvanceRental + cashAdvanceAirfare + cashAdvanceRegistration + cashAdvanceParking + cashAdvanceOtherTransportation + cashAdvanceOtherExpenses;
+			document.getElementById('totalCashAdvance').innerText = totalCashAdvance.toFixed(2);
 		}
+
 
         function calculateAllMeals() {
             document.querySelectorAll('#mealTableBody tr').forEach(row => calculateMealPerDiem(row.querySelector('input')));
