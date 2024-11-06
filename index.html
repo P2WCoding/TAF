@@ -215,13 +215,15 @@
         }
 
         function calculateTotalExpense() {
-            const mileage = parseFloat(document.getElementById('expenseMileage').innerText) || 0;
-            const lodging = parseFloat(document.getElementById('expenseLodging').innerText) || 0;
-            const meals = parseFloat(document.getElementById('expenseMealPerDiem').innerText) || 0;
-            const totalExpense = mileage + lodging + meals;
-            document.getElementById('totalExpense').innerText = totalExpense.toFixed(2);
-            document.getElementById('totalCashAdvance').innerText = totalExpense.toFixed(2);
-        }
+			const mileage = parseFloat(document.getElementById('expenseMileage').innerText) || 0;
+			const lodging = parseFloat(document.getElementById('expenseLodging').innerText) || 0;
+			const meals = parseFloat(document.getElementById('expenseMealPerDiem').innerText) || 0;
+			const registrationFee = parseFloat(document.getElementById('registrationFee').value) || 0;
+
+			const totalExpense = mileage + lodging + meals + registrationFee;
+			document.getElementById('totalExpense').innerText = totalExpense.toFixed(2);
+			document.getElementById('totalCashAdvance').innerText = totalExpense.toFixed(2);
+		}
 
         function calculateAllMeals() {
             document.querySelectorAll('#mealTableBody tr').forEach(row => calculateMealPerDiem(row.querySelector('input')));
