@@ -7,17 +7,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .bordered { border: 1px solid black; }
-        .relative { position: relative; } /* Make parent relative */
-        .absolute-top-right { position: absolute; top: 1rem; right: 1rem; } /* Position button */
+        .relative { position: relative; }
+        .absolute-top-right { position: absolute; top: 1rem; right: 1rem; }
+        
+        /* Modal styling */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 600px; }
     </style>
 </head>
 <body class="p-8" style="background-color: #009b22;">
 
     <div class="bordered p-8 bg-white rounded-lg shadow-lg relative">
-        <!-- Instructions Button -->
-        <a href="instructions.html" target="_blank" class="bg-blue-500 text-white py-2 px-4 rounded absolute-top-right">
+        <!-- Instructions Button to trigger modal -->
+        <button onclick="showModal()" class="bg-blue-500 text-white py-2 px-4 rounded absolute-top-right">
             Instructions
-        </a>
+        </button>
 
         <h1 class="text-center font-bold text-xl mb-4">Travel Authorization Form</h1>
 	
@@ -44,8 +48,19 @@
                     <label class="mt-2">Time Returning:</label> 
                     <input type="time" class="border p-2 w-full">
                 </div>
-            </div>
-        </div>
+				<div id="instructionsModal" class="modal">
+					<div class="modal-content">
+						<h1 class="text-center font-bold text-xl mb-4">Instructions for Completing the Travel Authorization Form</h1>
+						<p class="text-gray-700 mb-2">Complete all applicable sections of this form...</p>
+						
+						
+						<div class="mt-8 flex justify-center">
+							<button onclick="closeModal()" class="bg-red-500 text-white py-2 px-4 rounded">Close</button>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
 
         <!-- SECTION 2: TRAVEL EXPENSES -->
         <h2 class="font-bold mt-4 text-lg">TRAVEL EXPENSES</h2>
@@ -291,6 +306,14 @@
 			// Also update cash advance totals in case cash advance fields have changed
 			calculateTotalCashAdvance();
 		}
+		
+		function showModal() {
+            document.getElementById("instructionsModal").style.display = "flex";
+        }
+        
+        function closeModal() {
+            document.getElementById("instructionsModal").style.display = "none";
+        }
 
 		// Function to reset form fields on page load
 		window.onload = function() {
