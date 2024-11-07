@@ -109,55 +109,55 @@
         <tr>
             <td class="bordered p-2">Personal Vehicle/Mileage</td>
             <td class="bordered p-2"><span id="expenseMileage">0</span></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceMileage" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceMileage" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Rental Vehicle</td>
             <td class="bordered p-2"><input type="number" id="rentalVehicle" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceRental" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceRental" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Commercial Airfare/Flight</td>
             <td class="bordered p-2"><input type="number" id="airfare" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceAirfare" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceAirfare" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Registration Fees</td>
             <td class="bordered p-2"><input type="number" id="registrationFee" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceRegistration" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceRegistration" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Meal Per Diem</td>
             <td class="bordered p-2"><span id="expenseMealPerDiem">0</span></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceMealPerDiem" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceMealPerDiem" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Lodging</td>
             <td class="bordered p-2"><span id="expenseLodging">0</span></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceLodging" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceLodging" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Parking</td>
             <td class="bordered p-2"><input type="number" id="parking" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceParking" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceParking" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Other Transportation (i.e. taxi, subway)</td>
             <td class="bordered p-2"><input type="number" id="otherTransportation" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceOtherTransportation" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceOtherTransportation" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Other Expenses</td>
             <td class="bordered p-2"><input type="number" id="otherExpenses" class="border p-2 w-full" value="0" oninput="calculateTotalExpense()"></td>
-            <td class="bordered p-2"><input type="number" id="cashAdvanceOtherExpenses" class="border p-2 w-full" value="0"></td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceOtherExpenses" class="border p-2 w-full" value="0" oninput="calculateTotalCashAdvance()"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <!-- Total Row (Read-Only) -->
