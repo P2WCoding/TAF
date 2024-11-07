@@ -67,7 +67,10 @@
         <!-- MEAL PER DIEM CALCULATION -->
         <div class="mt-4 bordered bg-yellow-50 p-4">
             <h3 class="font-bold">Meal Per Diem Calculation</h3>
-            <button onclick="addDay()" class="mt-2 bg-blue-500 text-white p-2 rounded">Add Day</button>
+            <div class="mt-4 flex space-x-2">
+				<button onclick="addDay()" class="bg-blue-500 text-white p-2 rounded">Add Day</button>
+				<button onclick="removeDay()" class="bg-red-500 text-white p-2 rounded">Remove Day</button>
+			</div>
             <table class="w-full mt-4" id="mealTable">
 				<thead>
 					<tr class="bg-gray-100">
@@ -193,6 +196,14 @@
 			tableBody.appendChild(newRow);
 		}
 
+		function removeDay() {
+			const tableBody = document.getElementById('mealTableBody');
+			if (tableBody.rows.length > 1) {  // Prevent removing all rows
+				tableBody.deleteRow(tableBody.rows.length - 1);
+				calculateTotalMealPerDiem(); // Update the total meal per diem after removing a day
+			}
+		}
+
 		function calculateMealPerDiem(inputElement) {
 			const row = inputElement.closest('tr');
 			const rowDate = new Date(row.cells[0].querySelector('input').value);
@@ -244,6 +255,23 @@
 			calculateTotalExpense();
 		}
 
+		function calculateTotalCashAdvance() {
+			// Fetch values from each Cash Advance input field
+			const cashAdvanceMileage = parseFloat(document.getElementById('cashAdvanceMileage').value) || 0;
+			const cashAdvanceMealPerDiem = parseFloat(document.getElementById('cashAdvanceMealPerDiem').value) || 0;
+			const cashAdvanceLodging = parseFloat(document.getElementById('cashAdvanceLodging').value) || 0;
+			const cashAdvanceRental = parseFloat(document.getElementById('cashAdvanceRental').value) || 0;
+			const cashAdvanceAirfare = parseFloat(document.getElementById('cashAdvanceAirfare').value) || 0;
+			const cashAdvanceRegistration = parseFloat(document.getElementById('cashAdvanceRegistration').value) || 0;
+			const cashAdvanceParking = parseFloat(document.getElementById('cashAdvanceParking').value) || 0;
+			const cashAdvanceOtherTransportation = parseFloat(document.getElementById('cashAdvanceOtherTransportation').value) || 0;
+			const cashAdvanceOtherExpenses = parseFloat(document.getElementById('cashAdvanceOtherExpenses').value) || 0;
+
+			// Sum up all cash advance amounts
+			const totalCashAdvance = cashAdvanceMileage + cashAdvanceRental + cashAdvanceMealPerDiem + cashAdvanceAirfare + cashAdvanceLodging + cashAdvanceRegistration + cashAdvanceParking + cashAdvanceOtherTransportation + cashAdvanceOtherExpenses;
+			document.getElementById('totalCashAdvance').innerText = totalCashAdvance.toFixed(2);
+		}
+
 		function calculateTotalExpense() {
 			// Fetch values from each input field in the Expense column
 			const mileage = parseFloat(document.getElementById('personalMileage').innerText) || 0;
@@ -260,23 +288,10 @@
 			const totalExpense = mileage + rentalVehicle + airfare + registrationFee + mealPerDiem + lodging + parking + otherTransportation + otherExpenses;
 			document.getElementById('totalExpense').innerText = totalExpense.toFixed(2);
 
-			// Fetch values from each Cash Advance input field
-			const cashAdvanceMileage = parseFloat(document.getElementById('cashAdvanceMileage').value) || 0;
-			const cashAdvanceMealPerDiem = parseFloat(document.getElementById('cashAdvanceMealPerDiem').value) || 0;
-			const cashAdvanceLodging = parseFloat(document.getElementById('cashAdvanceLodging').value) || 0;
-			const cashAdvanceRental = parseFloat(document.getElementById('cashAdvanceRental').value) || 0;
-			const cashAdvanceAirfare = parseFloat(document.getElementById('cashAdvanceAirfare').value) || 0;
-			const cashAdvanceRegistration = parseFloat(document.getElementById('cashAdvanceRegistration').value) || 0;
-			const cashAdvanceParking = parseFloat(document.getElementById('cashAdvanceParking').value) || 0;
-			const cashAdvanceOtherTransportation = parseFloat(document.getElementById('cashAdvanceOtherTransportation').value) || 0;
-			const cashAdvanceOtherExpenses = parseFloat(document.getElementById('cashAdvanceOtherExpenses').value) || 0;
-
-			// Sum up all cash advance amounts
-			const totalCashAdvance = cashAdvanceMileage + cashAdvanceRental + cashAdvanceMealPerDiem + cashAdvanceAirfare + cashAdvanceLodging + cashAdvanceRegistration + cashAdvanceParking + cashAdvanceOtherTransportation + cashAdvanceOtherExpenses;
-			document.getElementById('totalCashAdvance').innerText = totalCashAdvance.toFixed(2);
+			// Also update cash advance totals in case cash advance fields have changed
+			calculateTotalCashAdvance();
 		}
-	</script>
-	<script>
+
 		// Function to reset form fields on page load
 		window.onload = function() {
 			document.querySelectorAll("input[type='text'], input[type='number'], input[type='date'], input[type='time']").forEach(input => input.value = '');
