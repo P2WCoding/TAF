@@ -272,7 +272,7 @@
 			const cashAdvanceOtherExpenses = parseFloat(document.getElementById('cashAdvanceOtherExpenses').value) || 0;
 
 			// Sum up all cash advance amounts
-			const totalCashAdvance = cashAdvanceMileage + cashAdvanceRental + cashAdvanceAirfare + cashAdvanceRegistration + cashAdvanceParking + cashAdvanceOtherTransportation + cashAdvanceOtherExpenses;
+			const totalCashAdvance = cashAdvanceMileage + cashAdvanceRental + cashAdvanceMealPerDiem + cashAdvanceAirfare + cashAdvanceLodging + cashAdvanceRegistration + cashAdvanceParking + cashAdvanceOtherTransportation + cashAdvanceOtherExpenses;
 			document.getElementById('totalCashAdvance').innerText = totalCashAdvance.toFixed(2);
 		}
 	</script>
