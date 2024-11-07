@@ -268,22 +268,22 @@
     </tbody>
 </table>
 
-		<div class="mt-8 p-4 bordered bg-gray-300 rounded">
+		<div class="mt-8 p-4 bordered bg-gray-400 rounded">
 			<p class="mb-2">
 				By typing my name below, I understand and agree that this form of electronic signature has the same legal force and effect as a manual signature.
 			</p>
 			<div class="flex items-center space-x-4">
 				<label for="signatureName" class="font-bold">Name:</label>
-				<input type="text" id="signatureName" class="border p-2 w-full" placeholder="Type your name here" required>
+				<input type="text" id="signatureName" class="border p-2 w-full" placeholder="Type your name here" required maxlength="50" oninput="checkSignature()">
 
 				<label for="signatureDate" class="font-bold">Date:</label>
-				<input type="date" id="signatureDate" class="border p-2" required>
+				<input type="date" id="signatureDate" class="border p-2" required oninput="checkSignature()">
 			</div>
 		</div>
 		
         <!-- Print Button (disabled by default) -->
 		<div class="mt-8 flex justify-end space-x-4">
-			<button id="printButton" onclick="window.print()" class="text-white p-2 rounded" style="background-color: #009b22;" disabled>Print</button>
+			<button id="printButton" onclick="triggerPrint()" class="text-white p-2 rounded" style="background-color: #009b22;" disabled>Print</button>
 		</div>
 	</div>
 
@@ -413,29 +413,24 @@
 			document.querySelectorAll("input[type='checkbox']").forEach(input => input.checked = false);
 			document.querySelectorAll("span").forEach(span => span.innerText = '0');
 		};
-		// Check if signature fields are filled
+		// Function to enable print button when name and date are filled
 		function checkSignature() {
 			const name = document.getElementById("signatureName").value.trim();
 			const date = document.getElementById("signatureDate").value;
 			const printButton = document.getElementById("printButton");
 
 			// Enable print button only if both name and date fields are filled
-			if (name && date) {
-				printButton.disabled = false;
-			} else {
-				printButton.disabled = true;
-			}
+			printButton.disabled = !(name && date);
 		}
 
-		// Constraints for specific fields (example constraints)
-		document.getElementById("signatureName").setAttribute("maxlength", "50"); // Max characters for name
+		// Function to trigger print
+		function triggerPrint() {
+			window.print();
+		}
 
-		// Optional: Reset form on page load
+		// Ensure the print button is disabled initially
 		window.onload = function() {
-			document.querySelectorAll("input[type='text'], input[type='number'], input[type='date'], input[type='time']").forEach(input => input.value = '');
-			document.querySelectorAll("input[type='checkbox']").forEach(input => input.checked = false);
-			document.querySelectorAll("span").forEach(span => span.innerText = '0');
-			checkSignature(); // Ensure the print button is disabled initially
+			checkSignature(); // Call to set the initial state of the print button
 		};
 	</script>
 </body>
