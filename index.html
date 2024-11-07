@@ -276,5 +276,13 @@
 			document.getElementById('totalCashAdvance').innerText = totalCashAdvance.toFixed(2);
 		}
 	</script>
+	<script>
+		// Function to reset form fields on page load
+		window.onload = function() {
+			document.querySelectorAll("input[type='text'], input[type='number'], input[type='date'], input[type='time']").forEach(input => input.value = '');
+			document.querySelectorAll("input[type='checkbox']").forEach(input => input.checked = false);
+			document.querySelectorAll("span").forEach(span => span.innerText = '0');
+		};
+	</script>
 </body>
 </html>
