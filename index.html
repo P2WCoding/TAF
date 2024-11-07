@@ -268,7 +268,18 @@
     </tbody>
 </table>
 
+		<div class="mt-8 p-4 bordered bg-gray-100 rounded">
+			<p class="mb-2">
+				By typing my name below, I understand and agree that this form of electronic signature has the same legal force and effect as a manual signature.
+			</p>
+			<div class="flex items-center space-x-4">
+				<label for="signatureName" class="font-bold">Name:</label>
+				<input type="text" id="signatureName" class="border p-2 w-full" placeholder="Type your name here" required>
 
+				<label for="signatureDate" class="font-bold">Date:</label>
+				<input type="date" id="signatureDate" class="border p-2" required>
+			</div>
+		</div>
         <!-- Print and Save as PDF Buttons -->
         <div class="mt-8 flex justify-end space-x-4">
             <button onclick="window.print()" class="text-white p-2 rounded" style="background-color: #009b22;">Print</button>
