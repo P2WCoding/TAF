@@ -145,13 +145,13 @@
         <!-- SECTION 2: TRAVEL EXPENSES -->
         <h2 class="font-bold mt-4 text-lg">TRAVEL EXPENSES</h2>
         <div class="flex mt-4">
-            <div class="w-1/2 p-4 bordered bg-green-50">
+            <div class="w-1/2 p-4 bordered bg-yellow-50">
                 <h3 class="font-bold">Mileage Calculation</h3>
                 <p>Miles to be Traveled: <input type="number" id="miles" class="border w-full p-1" value="0" oninput="calculateMileage()"></p>
                 <p>Mileage Rate: <input type="number" id="mileageRate" class="border w-full p-1" value="0.67" oninput="calculateMileage()"></p>
                 <p>Total Mileage: <span id="personalMileage">0</span></p>
             </div>
-            <div class="w-1/2 p-4 bordered bg-blue-50">
+            <div class="w-1/2 p-4 bordered bg-yellow-50">
                 <h3 class="font-bold">Lodging Calculation</h3>
                 <p>Number of Nights: <input type="number" id="nights" class="border w-full p-1" value="0" oninput="calculateLodging()"></p>
                 <p>Daily Rate: <input type="number" id="dailyRate" class="border w-full p-1" value="0" oninput="calculateLodging()"></p>
@@ -164,11 +164,11 @@
             <h3 class="font-bold">Meal Per Diem Calculation</h3>
             <div class="mt-4 flex space-x-2">
 				<button onclick="addDay()" class="bg-blue-500 text-white p-2 rounded">Add Day</button>
-				<button onclick="removeDay()" class="bg-red-500 text-white p-2 rounded">Remove Day</button>
+				<button onclick="removeDay()" class="bg-blue-500 text-white p-2 rounded">Remove Day</button>
 			</div>
             <table class="w-full mt-4" id="mealTable">
 				<thead>
-					<tr class="bg-gray-300">
+					<tr class="bg-gray-400">
 						<th class="bordered p-2">Dates of Travel</th>
 						<th class="bordered p-2">Breakfast</th>
 						<th class="bordered p-2">Lunch</th>
@@ -196,7 +196,7 @@
 <h2 class="font-bold mt-4 text-lg">TRAVEL EXPENSE SUMMARY</h2>
 <table class="w-full mt-2 bordered p-4 rounded-md bg-gray-200">
     <thead>
-        <tr class="bg-gray-300">
+        <tr class="bg-gray-400">
             <th class="bordered p-2">Type</th>
             <th class="bordered p-2">Expense</th>
             <th class="bordered p-2">Cash Advance Requested</th>
