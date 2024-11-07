@@ -45,7 +45,7 @@
 	
         <!-- SECTION 1: REQUESTED TRAVEL DETAILS -->
         <h2 class="font-bold mt-4 text-lg">REQUESTED TRAVEL DETAILS</h2>
-        <div class="bordered p-4 rounded-md bg-gray-200">
+        <div class="bordered p-4 rounded-md bg-gray-400">
             <div class="grid grid-cols-3 gap-4">
                 <div><label>Name:</label> <input type="text" class="border p-2 w-full"></div>
                 <div><label>Title:</label> <input type="text" class="border p-2 w-full"></div>
@@ -178,7 +178,7 @@
 					</tr>
 				</thead>
 				<tbody id="mealTableBody">
-					<tr class="bordered">
+					<tr class="bordered bg-gray-200">
 						<td class="bordered p-2"><input type="date" class="border p-2 w-full" onchange="calculateAllMeals()"></td>
 						<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this.closest('tr'))"></td>
 						<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this.closest('tr'))"></td>
