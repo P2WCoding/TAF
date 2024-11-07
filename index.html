@@ -133,13 +133,13 @@
         <tr>
             <td class="bordered p-2">Meal Per Diem</td>
             <td class="bordered p-2"><span id="expenseMealPerDiem">0</span></td>
-            <td class="bordered p-2">$0.00</td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceMealPerDiem" class="border p-2 w-full" value="0"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
             <td class="bordered p-2">Lodging</td>
             <td class="bordered p-2"><span id="expenseLodging">0</span></td>
-            <td class="bordered p-2">$0.00</td>
+            <td class="bordered p-2"><input type="number" id="cashAdvanceLodging" class="border p-2 w-full" value="0"></td>
             <td class="bordered p-2"><input type="checkbox"></td>
         </tr>
         <tr>
@@ -262,6 +262,8 @@
 
 			// Fetch values from each Cash Advance input field
 			const cashAdvanceMileage = parseFloat(document.getElementById('cashAdvanceMileage').value) || 0;
+			const cashAdvanceMealPerDiem = parseFloat(document.getElementById('cashAdvanceMealPerDiem').value) || 0;
+			const cashAdvanceLodging = parseFloat(document.getElementById('cashAdvanceLodging').value) || 0;
 			const cashAdvanceRental = parseFloat(document.getElementById('cashAdvanceRental').value) || 0;
 			const cashAdvanceAirfare = parseFloat(document.getElementById('cashAdvanceAirfare').value) || 0;
 			const cashAdvanceRegistration = parseFloat(document.getElementById('cashAdvanceRegistration').value) || 0;
