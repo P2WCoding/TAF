@@ -180,76 +180,41 @@
     </div>
 
     <script>
-        function addDay() {
-            const tableBody = document.getElementById('mealTableBody');
-            const newRow = document.createElement('tr');
-            newRow.classList.add('bordered');
-            newRow.innerHTML = `
-                <td class="bordered p-2"><input type="date" class="border p-2 w-full" onchange="calculateAllMeals()"></td>
-                <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
-                <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
-                <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
-                <td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
-                <td class="bordered p-2"><span class="totalPerDay">0</span></td>
-            `;
-            tableBody.appendChild(newRow);
-        }
+		function addDay() {
+			const tableBody = document.getElementById('mealTableBody');
+			const newRow = document.createElement('tr');
+			newRow.classList.add('bordered');
+			newRow.innerHTML = `
+				<td class="bordered p-2"><input type="date" class="border p-2 w-full" onchange="calculateAllMeals()"></td>
+				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
+				<td class="bordered p-2"><span class="totalPerDay">0</span></td>
+			`;
+			tableBody.appendChild(newRow);
+		}
 
-        function calculateMealPerDiem(inputElement) {
-            const row = inputElement.closest('tr');
-            const rowDate = new Date(row.cells[0].querySelector('input').value);
-            const departDate = new Date(document.getElementById('dateDeparting').value);
-            const returnDate = new Date(document.getElementById('dateReturning').value);
-
-            const isFirstOrLastDay = (rowDate.getTime() === departDate.getTime()) || (rowDate.getTime() === returnDate.getTime());
-
-            const breakfast = parseFloat(row.cells[1].querySelector('input').value) || 0;
-            const lunch = parseFloat(row.cells[2].querySelector('input').value) || 0;
-            const dinner = parseFloat(row.cells[3].querySelector('input').value) || 0;
-            const incidentals = parseFloat(row.cells[4].querySelector('input').value) || 0;
-
-            // Apply 75% rate if it's the first or last day
-            const dailyTotal = isFirstOrLastDay 
-                ? (breakfast * 0.75) + (lunch * 0.75) + (dinner * 0.75) + (incidentals * 0.75)
-                : breakfast + lunch + dinner + incidentals;
-
-            row.querySelector('.totalPerDay').innerText = dailyTotal.toFixed(2);
-
-            calculateTotalMealPerDiem();
-        }
-
-        function calculateMealPerDiem(row) {
+		function calculateMealPerDiem(inputElement) {
+			const row = inputElement.closest('tr');
 			const rowDate = new Date(row.cells[0].querySelector('input').value);
 			const departDate = new Date(document.getElementById('dateDeparting').value);
 			const returnDate = new Date(document.getElementById('dateReturning').value);
 
 			const isFirstOrLastDay = (rowDate.getTime() === departDate.getTime()) || (rowDate.getTime() === returnDate.getTime());
 
-			// Get the meal values
-			let breakfast = parseFloat(row.cells[1].querySelector('input').value) || 0;
-			let lunch = parseFloat(row.cells[2].querySelector('input').value) || 0;
-			let dinner = parseFloat(row.cells[3].querySelector('input').value) || 0;
-			let incidentals = parseFloat(row.cells[4].querySelector('input').value) || 0;
+			const breakfast = parseFloat(row.cells[1].querySelector('input').value) || 0;
+			const lunch = parseFloat(row.cells[2].querySelector('input').value) || 0;
+			const dinner = parseFloat(row.cells[3].querySelector('input').value) || 0;
+			const incidentals = parseFloat(row.cells[4].querySelector('input').value) || 0;
 
 			// Apply 75% rate if it's the first or last day
-			if (isFirstOrLastDay) {
-				breakfast *= 0.75;
-				lunch *= 0.75;
-				dinner *= 0.75;
-				incidentals *= 0.75;
-			}
+			const dailyTotal = isFirstOrLastDay 
+				? (breakfast * 0.75) + (lunch * 0.75) + (dinner * 0.75) + (incidentals * 0.75)
+				: breakfast + lunch + dinner + incidentals;
 
-			// Update the displayed values in each cell
-			row.cells[1].querySelector('input').value = breakfast.toFixed(2);
-			row.cells[2].querySelector('input').value = lunch.toFixed(2);
-			row.cells[3].querySelector('input').value = dinner.toFixed(2);
-			row.cells[4].querySelector('input').value = incidentals.toFixed(2);
-
-			// Calculate the daily total
-			const dailyTotal = breakfast + lunch + dinner + incidentals;
 			row.querySelector('.totalPerDay').innerText = dailyTotal.toFixed(2);
 
-			// Update the total meal per diem
 			calculateTotalMealPerDiem();
 		}
 
@@ -263,33 +228,27 @@
 			calculateTotalExpense();
 		}
 
-		function calculateAllMeals() {
-			document.querySelectorAll('#mealTableBody tr').forEach(row => calculateMealPerDiem(row));
+		function calculateMileage() {
+			const miles = parseFloat(document.getElementById('miles').value) || 0;
+			const mileageRate = parseFloat(document.getElementById('mileageRate').value) || 0;
+			const personalMileage = miles * mileageRate;
+			document.getElementById('personalMileage').innerText = personalMileage.toFixed(2);
+			document.getElementById('expenseMileage').innerText = personalMileage.toFixed(2);
+			calculateTotalExpense();
 		}
 
+		function calculateLodging() {
+			const nights = parseFloat(document.getElementById('nights').value) || 0;
+			const dailyRate = parseFloat(document.getElementById('dailyRate').value) || 0;
+			const totalLodging = nights * dailyRate;
+			document.getElementById('totalLodging').innerText = totalLodging.toFixed(2);
+			document.getElementById('expenseLodging').innerText = totalLodging.toFixed(2);
+			calculateTotalExpense();
+		}
 
-        function calculateMileage() {
-            const miles = parseFloat(document.getElementById('miles').value) || 0;
-            const mileageRate = parseFloat(document.getElementById('mileageRate').value) || 0;
-            const personalMileage = miles * mileageRate;
-            document.getElementById('personalMileage').innerText = personalMileage.toFixed(2);
-            document.getElementById('expenseMileage').innerText = personalMileage.toFixed(2);
-            document.getElementById('cashAdvanceMileage').innerText = personalMileage.toFixed(2);
-            calculateTotalExpense();
-        }
-
-        function calculateLodging() {
-            const nights = parseFloat(document.getElementById('nights').value) || 0;
-            const dailyRate = parseFloat(document.getElementById('dailyRate').value) || 0;
-            const totalLodging = nights * dailyRate;
-            document.getElementById('totalLodging').innerText = totalLodging.toFixed(2);
-            document.getElementById('expenseLodging').innerText = totalLodging.toFixed(2);
-            calculateTotalExpense();
-        }
-
-        function calculateTotalExpense() {
+		function calculateTotalExpense() {
 			// Fetch values from each input field in the Expense column
-			const mileage = parseFloat(document.getElementById('personalMileage').value) || 0;
+			const mileage = parseFloat(document.getElementById('personalMileage').innerText) || 0;
 			const rentalVehicle = parseFloat(document.getElementById('rentalVehicle').value) || 0;
 			const airfare = parseFloat(document.getElementById('airfare').value) || 0;
 			const registrationFee = parseFloat(document.getElementById('registrationFee').value) || 0;
@@ -316,12 +275,6 @@
 			const totalCashAdvance = cashAdvanceMileage + cashAdvanceRental + cashAdvanceAirfare + cashAdvanceRegistration + cashAdvanceParking + cashAdvanceOtherTransportation + cashAdvanceOtherExpenses;
 			document.getElementById('totalCashAdvance').innerText = totalCashAdvance.toFixed(2);
 		}
-
-
-
-        function calculateAllMeals() {
-            document.querySelectorAll('#mealTableBody tr').forEach(row => calculateMealPerDiem(row.querySelector('input')));
-        }
-    </script>
+	</script>
 </body>
 </html>
