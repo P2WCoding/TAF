@@ -280,11 +280,12 @@
 				<input type="date" id="signatureDate" class="border p-2" required>
 			</div>
 		</div>
-        <!-- Print and Save as PDF Buttons -->
-        <div class="mt-8 flex justify-end space-x-4">
-            <button onclick="window.print()" class="text-white p-2 rounded" style="background-color: #009b22;">Print</button>
-        </div>
-    </div>
+		
+        <!-- Print Button (disabled by default) -->
+		<div class="mt-8 flex justify-end space-x-4">
+			<button id="printButton" onclick="window.print()" class="text-white p-2 rounded" style="background-color: #009b22;" disabled>Print</button>
+		</div>
+	</div>
 
     <script>
 		function addDay() {
@@ -411,6 +412,30 @@
 			document.querySelectorAll("input[type='text'], input[type='number'], input[type='date'], input[type='time']").forEach(input => input.value = '');
 			document.querySelectorAll("input[type='checkbox']").forEach(input => input.checked = false);
 			document.querySelectorAll("span").forEach(span => span.innerText = '0');
+		};
+		// Check if signature fields are filled
+		function checkSignature() {
+			const name = document.getElementById("signatureName").value.trim();
+			const date = document.getElementById("signatureDate").value;
+			const printButton = document.getElementById("printButton");
+
+			// Enable print button only if both name and date fields are filled
+			if (name && date) {
+				printButton.disabled = false;
+			} else {
+				printButton.disabled = true;
+			}
+		}
+
+		// Constraints for specific fields (example constraints)
+		document.getElementById("signatureName").setAttribute("maxlength", "50"); // Max characters for name
+
+		// Optional: Reset form on page load
+		window.onload = function() {
+			document.querySelectorAll("input[type='text'], input[type='number'], input[type='date'], input[type='time']").forEach(input => input.value = '');
+			document.querySelectorAll("input[type='checkbox']").forEach(input => input.checked = false);
+			document.querySelectorAll("span").forEach(span => span.innerText = '0');
+			checkSignature(); // Ensure the print button is disabled initially
 		};
 	</script>
 </body>
