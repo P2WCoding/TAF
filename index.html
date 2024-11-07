@@ -291,15 +291,17 @@
 		function addDay() {
 			const tableBody = document.getElementById('mealTableBody');
 			const newRow = document.createElement('tr');
-			newRow.classList.add('bordered');
+			newRow.classList.add('bordered', 'bg-gray-200'); // Adds gray background
+
 			newRow.innerHTML = `
 				<td class="bordered p-2"><input type="date" class="border p-2 w-full" onchange="calculateAllMeals()"></td>
-				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
-				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
-				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
-				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this)"></td>
-				<td class="bordered p-2"><span class="totalPerDay">0</span></td>
+				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this.closest('tr'))"></td>
+				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this.closest('tr'))"></td>
+				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this.closest('tr'))"></td>
+				<td class="bordered p-2"><input type="number" class="border p-2 w-full" value="0" oninput="calculateMealPerDiem(this.closest('tr'))"></td>
+				<td class="bordered p-2 text-center"><span class="totalPerDay">0</span></td>
 			`;
+
 			tableBody.appendChild(newRow);
 		}
 
